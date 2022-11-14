@@ -15,7 +15,7 @@ class QuestionInlineFormSet(forms.BaseInlineFormSet):
 
         order_nums_list = [form.cleaned_data['order_num'] for form in self.forms]
         if sorted(order_nums_list) != [i for i in range(1, len(self.forms) + 1)]:
-            raise ValidationError(f'Incorrect order numbers')
+            raise ValidationError('Incorrect order numbers')
 
         if max(order_nums_list) > self.instance.QUESTION_MAX_LIMIT:
             raise ValidationError(f'Max possible order number is {self.instance.QUESTION_MAX_LIMIT}')
