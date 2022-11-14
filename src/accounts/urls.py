@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from .views import UserLoginView
+from .views import UserLoginView, user_reactivate
 from .views import UserLogoutView
 from .views import UserProfileUpdateView
 from .views import UserRegisterView
@@ -12,6 +12,7 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('register/activate/<str:sign>/', user_activate, name='register_activate'),
+    path('register/reactivate/', user_reactivate, name='register_reactivate'),
     path('register/done/',
          TemplateView.as_view(template_name='accounts/user_register_done.html'), name='register_done'),
     path('register/', UserRegisterView.as_view(), name='register'),
