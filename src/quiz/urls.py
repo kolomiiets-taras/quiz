@@ -6,6 +6,7 @@ from .views import ExamResultCreateView
 # from .views import ExamResultDetailView
 from .views import ExamResultQuestionView
 # from .views import ExamResultUpdateView
+from .views import ExamResultDeleteView
 
 app_name = 'quiz'
 
@@ -18,5 +19,5 @@ urlpatterns = [
     #      name='question'),
     path('<uuid:uuid>/result/<uuid:res_uuid>/question/next/', ExamResultQuestionView.as_view(), name='question'),
     path('<uuid:uuid>/result/<uuid:res_uuid>/update/', ExamResultUpdateView.as_view(), name='result_update'),
-    # path('', '', name=''),
+    path('delete/<uuid:res_uuid>', ExamResultDeleteView.as_view(), name='result_delete'),
 ]
