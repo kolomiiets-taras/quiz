@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load calculate %}
 
 {% block title %}
     Test result
@@ -33,7 +34,32 @@
                         </tr>
                         <tr>
                             <td>Result</td>
-                            <td>{{ result.num_correct_answers }} / {{ result.num_incorrect_answers }}</td>
+                            <td>
+                                <div class="progress">
+                                    {% expression '%1 * 100 // %2' result.num_correct_answers result.exam.questions_count as level1 %}
+                                  <div class="progress-bar bg-success"
+                                       role="progressbar"
+                                       aria-label="Segment one"
+                                       style="width: {{ level1 }}%"
+                                       aria-valuenow="{{ level1 }}"
+                                       aria-valuemin="0"
+                                       aria-valuemax="100">
+                                      correct {{ level1 }}%
+                                  </div>
+                                  {% if result.num_incorrect_answers %}
+                                      {% expression '%1 * 100 // %2' result.num_incorrect_answers result.exam.questions_count as level2 %}
+                                      <div class="progress-bar bg-danger"
+                                           role="progressbar"
+                                           aria-label="Segment two"
+                                           style="width: {{ level2 }}%"
+                                           aria-valuenow="{{ level2 }}"
+                                           aria-valuemin="0"
+                                           aria-valuemax="100">
+                                          incorrect {{ level2 }}%
+                                      </div>
+                                  {% endif %}
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
               </table>
