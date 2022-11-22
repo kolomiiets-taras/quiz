@@ -65,7 +65,7 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ result.create_timestamp|date:'d-M-Y H:i' }}</td>     {# datetime.strptime('%d-%m-%Y %H:%M') #}
-                    <td>HA</td>
+                    <td>{{ result.get_points }}</td>
                     <td>{{ result.get_state_display }}</td>
                     <td>
                         {% if result.state == result.STATE.NEW %}
