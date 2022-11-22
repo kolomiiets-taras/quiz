@@ -1,11 +1,26 @@
 {% extends 'base.html' %}
 
+{% load calculate %}
+
 {% block title %}
     Test description
 {% endblock %}
 
 {% block header %}
     {{ question.text }}
+{#    {% with question.order_num|add:-1|multi:100|dived:question.exam.questions_count as level %}#}
+    {% expression '(%1 - 1) * 100 // %2' question.order_num question.exam.questions_count as level %}
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped progress-bar-animated"
+           role="progressbar"
+           aria-label="Animated striped example"
+           aria-valuenow="{{ level }}"
+           style="width: {{ level }}%"
+           aria-valuemin="0"
+           aria-valuemax="100"
+      >{{ level }}%</div>
+    </div>
+{#    {% endwith %}#}
 {% endblock %}
 
 {% block content %}
