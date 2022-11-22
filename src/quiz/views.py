@@ -162,7 +162,7 @@ class ExamResultUpdateView(LoginRequiredMixin, UpdateView):
 
 class ExamResultDeleteView(LoginRequiredMixin, DeleteView):
     model = Result
-    template_name = 'result/delete_result.html'
+    template_name = 'result/delete.html'
     success_url = reverse_lazy('quiz:list')
     pk_url_kwarg = 'uuid'
 
