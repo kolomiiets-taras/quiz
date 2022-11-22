@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Test result
+{% endblock %}
+
+{% block header %}
+    Result of test: "{{ result.exam.title }}"
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Started</td>
+                            <td>{{ result.create_timestamp }}</td>
+                        </tr>
+                        <tr>
+                            <td>Finished</td>
+                            <td>{{ result.update_timestamp }}</td>
+                        </tr>
+                        <tr>
+                            <td>Result</td>
+                            <td>{{ result.num_correct_answers }} / {{ result.num_incorrect_answers }}</td>
+                        </tr>
+                    </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="cols-5"></div>
+            <div class="cols">
+                <a class="btn btn-outline-primary m-3" href="{% url 'quiz:details' uuid=result.exam.uuid %}">
+                    Back to test
+                </a>
+            </div>
+            <div class="cols-5"></div>
+        </div>
+    </div>
+{% endblock %}

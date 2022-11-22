@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Reactivation page
+{% endblock %}
+
+{% block header %}
+    Resend Activation Link
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col">
+            <p align="center">Enter the email used during registration.</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                  <input name='email' type="text" class="form-control" placeholder="example@gmail.com" aria-label="Email" aria-describedby="button-addon2">
+                  <input class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                </div>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+{% endblock %}
