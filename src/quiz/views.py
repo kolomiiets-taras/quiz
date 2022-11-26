@@ -108,11 +108,11 @@ class ExamResultQuestionView(LoginRequiredMixin, UpdateView):
         selected_choices = ['is_selected' in form.changed_data for form in choices.forms]
 
         if sum(selected_choices) == len(choices):
-            messages.error(request, f'You can`t select all answers')
+            messages.error(request, 'You can`t select all answers')
             return HttpResponseRedirect(reverse('quiz:question', kwargs={'uuid': uuid, 'res_uuid': res_uuid}))
 
         elif sum(selected_choices) == 0:
-            messages.error(request, f'Select at least one answer')
+            messages.error(request, 'Select at least one answer')
             return HttpResponseRedirect(reverse('quiz:question', kwargs={'uuid': uuid, 'res_uuid': res_uuid}))
 
         else:
@@ -158,13 +158,13 @@ class ExamResultUpdateView(LoginRequiredMixin, UpdateView):
     def get(self, request, *args, **kwargs):
         uuid = kwargs.get('uuid')
         res_uuid = kwargs.get('res_uuid')
-        user = request.user
+        # user = request.user
 
-        result = Result.objects.get(
-            user=user,
-            uuid=res_uuid,
-            # exam__uuid=uuid,
-        )
+        # result = Result.objects.get(
+        #     user=user,
+        #     uuid=res_uuid,
+        #     # exam__uuid=uuid,
+        # )
 
         return HttpResponseRedirect(
             reverse(

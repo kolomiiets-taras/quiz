@@ -4,9 +4,9 @@ from .views import ExamDetailView, ExamResultDetailView, ExamResultUpdateView
 from .views import ExamListView
 from .views import ExamResultCreateView
 # from .views import ExamResultDetailView
+from .views import ExamResultDeleteView
 from .views import ExamResultQuestionView
 # from .views import ExamResultUpdateView
-from .views import ExamResultDeleteView
 
 app_name = 'quiz'
 
