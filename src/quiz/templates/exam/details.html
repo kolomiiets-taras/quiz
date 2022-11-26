@@ -30,15 +30,15 @@
                         </tr>
                         <tr>
                             <td>Best result</td>
-                            <td>N/A</td>
+                            <td>{{ best_result }} points</td>
                         </tr>
                         <tr>
                             <td>Best user</td>
-                            <td>N/A</td>
+                            <td>{{ best_user }}</td>
                         </tr>
                         <tr>
                             <td>Last run</td>
-                            <td>N/A</td>
+                            <td>{{ exam.results.all.last.update_timestamp }}</td>
                         </tr>
                     </tbody>
               </table>

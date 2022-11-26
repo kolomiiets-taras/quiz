@@ -85,6 +85,7 @@ class Result(BaseModel):
         verbose_name = 'Result'
         verbose_name_plural = 'Results'
 
+    @property
     def get_points(self):
         points = self.num_correct_answers - self.num_incorrect_answers
         if points >= 0:
