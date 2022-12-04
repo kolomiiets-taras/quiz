@@ -30,15 +30,15 @@
                         </tr>
                         <tr>
                             <td>Best result</td>
-                            <td>N/A</td>
+                            <td>{{ best_result }} points</td>
                         </tr>
                         <tr>
                             <td>Best user</td>
-                            <td>N/A</td>
+                            <td>{{ best_user }}</td>
                         </tr>
                         <tr>
                             <td>Last run</td>
-                            <td>N/A</td>
+                            <td>{{ exam.results.all.last.update_timestamp }}</td>
                         </tr>
                     </tbody>
               </table>
@@ -65,14 +65,14 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ result.create_timestamp|date:'d-M-Y H:i' }}</td>     {# datetime.strptime('%d-%m-%Y %H:%M') #}
-                    <td>HA</td>
+                    <td>{{ result.get_points }}</td>
                     <td>{{ result.get_state_display }}</td>
                     <td>
                         {% if result.state == result.STATE.NEW %}
                             <a class="btn btn-outline-warning" href="{% url 'quiz:result_update' exam.uuid result.uuid %}">
                                 Continue
                             </a>
-                            <a class="btn btn-outline-danger" href="#">
+                            <a class="btn btn-outline-danger" href="{% url 'quiz:result_delete' result.uuid %}">
                                 Remove
                             </a>
                         {% else %}

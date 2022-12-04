@@ -85,6 +85,13 @@ class Result(BaseModel):
         verbose_name = 'Result'
         verbose_name_plural = 'Results'
 
+    @property
+    def get_points(self):
+        points = self.num_correct_answers - self.num_incorrect_answers
+        if points >= 0:
+            return points
+        return 0
+
     def update_result(self, order_number, question, select_choices):
         correct_choice = [choice.is_correct for choice in question.choices.all()]
         correct_answer = True
