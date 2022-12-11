@@ -1,0 +1,120 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+#    platform: linux/amd64
+#    image: nkiseev/web_service:latest
+#    container_name: web_service
+#    command: gunicorn app.wsgi:application --workers 4 --bind 0.0.0.0:8890
+#    volumes:
+#      - static_volume:/opt/src/static
+#      - media_volume:/opt/src/media
+    command: python manage.py runserver 0.0.0.0:8890
+    ports:
+      - "8890:8890"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: curl --fail -s http://localhost:8890/ || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    restart: always
+
+  db:
+    image: postgres:12.0-alpine
+    container_name: db_service
+    volumes:
+      - db_data_volume:/var/lib/postgresql/data/
+    ports:
+      - "5435:5432"
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 5s
+      retries: 5
+    restart: always
+
+#  nginx:
+#    build: ./nginx
+#    platform: linux/amd64
+#    image: nkiseev/nginx_service:latest
+#    container_name: nginx_service
+#    volumes:
+#      - static_volume:/opt/src/static
+#      - media_volume:/opt/src/media
+#    ports:
+#      - "80:80"
+#    depends_on:
+#      db:
+#        condition: service_healthy
+##      web:
+##        condition: service_healthy
+#    healthcheck:
+#      test: [ 'CMD', '/usr/src/healthcheck.sh' ]
+#      interval: 1m
+#      timeout: 5s
+#      retries: 3
+#    restart: always
+#
+#  broker:
+#    image: rabbitmq:3.9.12-alpine
+#    container_name: broker_service
+#    volumes:
+#      - rabbit_volume:/var/lib/rabbitmq
+#    ports:
+#      - "5672:5672"
+#    env_file:
+#      - .env
+#    restart: always
+
+#  worker: # celery
+#    build: .
+#    container_name: worker_service
+#    command: sh -c "celery -A app worker --concurrency=20 --loglevel=info"
+#    volumes:
+#      - src_volume:/opt/src
+#    env_file:
+#      - .env
+#    depends_on:
+#      - broker
+#      - backend
+#
+#  scheduler: # celery_beat - CRON
+#    build: .
+#    container_name: scheduler_service
+#    command: sh -c "celery -A app beat -l info"
+#    volumes:
+#      - src_volume:/opt/src
+#    env_file:
+#      - .env
+#    depends_on:
+#      - broker
+#      - backend
+
+#  backend:
+#    image: redis:6.2.6-alpine
+#    container_name: backend_service
+#    volumes:
+#      - redis_volume:/data
+#    ports:
+#      - "6379:6379"
+#
+volumes:
+  db_data_volume:
+    name: db_data
+#  static_volume:
+#    name: static_data
+#  media_volume:
+#    name: media_data
+#  src_volume:
+#    name: source_code
+#  rabbit_volume:
+#    name: rabbit_data
+#  redis_volume:
+#    name: redis_data

@@ -87,13 +87,23 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / '../quiz.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / '../quiz.sqlite3',
+    "default": {
+        "ENGINE": 'django.db.backends.postgresql_psycopg2',
+        "HOST": environ["POSTGRESQL_HOST"],
+        "PORT": environ["POSTGRESQL_PORT"],
+        "NAME": environ["POSTGRESQL_DB"],
+        "USER": environ["POSTGRESQL_USER"],
+        "PASSWORD": environ["POSTGRESQL_PASSWORD"],
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
