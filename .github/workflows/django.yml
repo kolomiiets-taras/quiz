@@ -30,11 +30,6 @@ jobs:
         DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         DJANGO_DEBUG: ${{ secrets.DJANGO_DEBUG }}
         DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
-        POSTGRESQL_HOST: ${{ secrets.POSTGRESQL_HOST }}
-        POSTGRESQL_PORT: ${{ secrets.POSTGRESQL_PORT }}
-        POSTGRESQL_DB: ${{ secrets.POSTGRESQL_DB }}
-        POSTGRESQL_USER: ${{ secrets.POSTGRESQL_USER }}
-        POSTGRESQL_PASSWORD: ${{ secrets.POSTGRESQL_PASSWORD }}
       run: |
         cd src
-        python manage.py test
+        python manage.py test --settings=app.settings_dev
