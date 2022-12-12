@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from os import environ
 from pathlib import Path
 
+from celery.schedules import crontab
 from django.urls import reverse_lazy
 
 from dotenv import load_dotenv
@@ -143,6 +144,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -162,3 +164,21 @@ EMAIL_PORT = 1025
 
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SERVER_EMAIL = 'noreply@test.com'
+ADMINS = [('admin', 'admin@test.com'), ]
+
+CELERY_BROKER_URL = environ['CELERY_BROKER']
+CELERY_RESULT_BACKEND = environ['CELERY_BACKEND']
+
+CELERY_BEAT_SCHEDULE = {
+    'simple_task': {
+        'task': 'quiz.tasks.simple_task',
+        'schedule': crontab(minute='*/1')
+    },
+    'send_email_report': {
+        'task': 'quiz.tasks.send_email_report',
+        'schedule': crontab(minute='*/2')
+    },
+}
