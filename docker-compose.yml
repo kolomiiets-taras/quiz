@@ -97,14 +97,14 @@ services:
       - broker
       - backend
 
-#  backend:
-#    image: redis:6.2.6-alpine
-#    container_name: backend_service
-#    volumes:
-#      - redis_volume:/data
-#    ports:
-#      - "6379:6379"
-#
+  backend:
+    image: redis:6.2.6-alpine
+    container_name: backend_service
+    volumes:
+      - redis_volume:/data
+    ports:
+      - "6379:6379"
+
 volumes:
   db_data_volume:
     name: db_data
@@ -116,5 +116,5 @@ volumes:
     name: source_code
   rabbit_volume:
     name: rabbit_data
-#  redis_volume:
-#    name: redis_data
+  redis_volume:
+    name: redis_data

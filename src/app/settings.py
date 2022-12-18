@@ -25,12 +25,12 @@ load_dotenv(BASE_DIR / '../.env')
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = environ['DJANGO_SECRET_KEY']
+SECRET_KEY = environ.get('DJANGO_SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = environ['DJANGO_DEBUG'].lower() in ['true', '1', 'on']
+DEBUG = environ.get('DJANGO_DEBUG', '').lower() in ['true', '1', 'on']
 
-ALLOWED_HOSTS = environ['DJANGO_ALLOWED_HOSTS'].split()
+ALLOWED_HOSTS = environ.get('DJANGO_ALLOWED_HOSTS', '').split()
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'accounts.apps.AccountsConfig',
     'quiz.apps.QuizConfig',
+    'task.apps.TaskConfig',
 
 ]
 
@@ -169,8 +170,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SERVER_EMAIL = 'noreply@test.com'
 ADMINS = [('admin', 'admin@test.com'), ]
 
-CELERY_BROKER_URL = environ['CELERY_BROKER']
-CELERY_RESULT_BACKEND = environ['CELERY_BACKEND']
+CELERY_BROKER_URL = environ.get('CELERY_BROKER', '')
+CELERY_RESULT_BACKEND = environ.get('CELERY_BACKEND', '')
 
 CELERY_BEAT_SCHEDULE = {
     'simple_task': {

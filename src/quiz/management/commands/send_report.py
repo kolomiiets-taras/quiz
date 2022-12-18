@@ -31,7 +31,7 @@ class Command(BaseCommand):
                         result.user.username,
                         result.exam.title,
                         f'{result.num_correct_answers}/{result.num_incorrect_answers}',
-                        result.points(),
+                        result.get_points,
                         f'{round((result.update_timestamp - result.create_timestamp).total_seconds())}s.'
                     ]
                 )

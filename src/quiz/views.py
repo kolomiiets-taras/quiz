@@ -30,9 +30,12 @@ class ExamDetailView(LoginRequiredMixin, DetailView, MultipleObjectMixin):
 
     def get_best(self):
         query = {model.get_points: model.user for model in self.get_queryset()}
-        best_result = max(query.keys())
-        best_user = query[best_result]
-        return best_result, best_user
+        if query:
+            best_result = max(query.keys())
+            best_user = query[best_result]
+            return best_result, best_user.username
+        else:
+            return '---', '---'
 
     def get_object(self, queryset=None):
         uuid = self.kwargs.get('uuid')
@@ -42,7 +45,7 @@ class ExamDetailView(LoginRequiredMixin, DetailView, MultipleObjectMixin):
         context = super().get_context_data(object_list=self.get_queryset(), **kwargs)
         best_result, best_user = self.get_best()
         context['best_result'] = best_result
-        context['best_user'] = best_user.username
+        context['best_user'] = best_user
         return context
 
     def get_queryset(self):
